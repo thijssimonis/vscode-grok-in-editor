@@ -1,0 +1,196 @@
+{
+    "name": "grok-in-editor",
+    "displayName": "Grok in Editor",
+    "description": "Open the Grok TUI as an editor tab next to your files. Fix, explain, or improve code from the lightbulb.",
+    "version": "1.0.0",
+    "publisher": "thijssimonis",
+    "author": {
+        "name": "Thijs Simonis",
+        "url": "https://thijssimonis.nl"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/thijssimonis/vscode-grok-in-editor.git"
+    },
+    "homepage": "https://github.com/thijssimonis/vscode-grok-in-editor",
+    "license": "MIT",
+    "icon": "media/icon.png",
+    "pricing": "Free",
+    "galleryBanner": {
+        "color": "#000000",
+        "theme": "dark"
+    },
+    "keywords": [
+        "grok",
+        "grok build",
+        "xai",
+        "ai",
+        "tui",
+        "terminal",
+        "code actions",
+        "quick fix",
+        "chat",
+        "coding assistant"
+    ],
+    "engines": {
+        "vscode": "^1.90.0"
+    },
+    "categories": [
+        "Other",
+        "Machine Learning"
+    ],
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "grok.openInEditor",
+                "title": "Open in Editor",
+                "category": "Grok",
+                "icon": {
+                    "light": "media/grok-light.svg",
+                    "dark": "media/grok-dark.svg"
+                }
+            },
+            {
+                "command": "grok.fixWithGrok",
+                "title": "Fix Code",
+                "category": "Grok",
+                "icon": {
+                    "light": "media/grok-light.svg",
+                    "dark": "media/grok-dark.svg"
+                }
+            },
+            {
+                "command": "grok.explainCode",
+                "title": "Explain Code",
+                "category": "Grok",
+                "icon": {
+                    "light": "media/grok-light.svg",
+                    "dark": "media/grok-dark.svg"
+                }
+            },
+            {
+                "command": "grok.improveCode",
+                "title": "Improve Code",
+                "category": "Grok",
+                "icon": {
+                    "light": "media/grok-light.svg",
+                    "dark": "media/grok-dark.svg"
+                }
+            }
+        ],
+        "submenus": [
+            {
+                "id": "grok.contextMenu",
+                "label": "Grok"
+            }
+        ],
+        "menus": {
+            "commandPalette": [
+                {
+                    "command": "grok.openInEditor"
+                },
+                {
+                    "command": "grok.fixWithGrok"
+                },
+                {
+                    "command": "grok.explainCode"
+                },
+                {
+                    "command": "grok.improveCode"
+                }
+            ],
+            "editor/title": [
+                {
+                    "command": "grok.openInEditor",
+                    "group": "navigation"
+                }
+            ],
+            "editor/context": [
+                {
+                    "submenu": "grok.contextMenu",
+                    "group": "1_modification"
+                }
+            ],
+            "grok.contextMenu": [
+                {
+                    "command": "grok.fixWithGrok",
+                    "group": "1_actions@1"
+                },
+                {
+                    "command": "grok.explainCode",
+                    "group": "1_actions@2"
+                },
+                {
+                    "command": "grok.improveCode",
+                    "group": "1_actions@3"
+                }
+            ]
+        },
+        "configuration": {
+            "title": "Grok in Editor",
+            "properties": {
+                "grok.cliPath": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Absolute path to the grok binary. Leave empty to search PATH and ~/.grok/bin/grok."
+                },
+                "grok.fixViewColumn": {
+                    "type": "string",
+                    "enum": [
+                        "active",
+                        "beside"
+                    ],
+                    "default": "active",
+                    "description": "Where to open Grok Fix / Explain / Improve tabs."
+                },
+                "grok.extraArgs": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [],
+                    "description": "Extra arguments passed to grok before the optional prompt."
+                }
+            }
+        },
+        "codeActions": [
+            {
+                "languages": [
+                    "*"
+                ],
+                "actions": [
+                    {
+                        "kind": "quickfix",
+                        "title": "Fix with Grok"
+                    },
+                    {
+                        "kind": "quickfix",
+                        "title": "Explain with Grok"
+                    },
+                    {
+                        "kind": "quickfix",
+                        "title": "Improve with Grok"
+                    }
+                ]
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "tsc -p ./",
+        "test": "node --test $(find out -name '*.test.js')",
+        "package": "vsce package"
+    },
+    "devDependencies": {
+        "@types/node": "^22.15.0",
+        "@types/vscode": "^1.90.0",
+        "@vscode/vsce": "^3.2.0",
+        "typescript": "^5.8.0"
+    }
+}
